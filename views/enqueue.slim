@@ -1,0 +1,26 @@
+form action="/enqueue" method="post"
+  div class="row"
+    div class="six columns"
+      label for="your_deck" Your Deck
+      input type="text" name="your_deck" class="u-full-width"
+    div class="six columns"
+      label for="enemy_deck" Enemy Deck
+      input type="text" name="enemy_deck" class="u-full-width"
+  div class="row"
+    div class="six columns"
+      label for="command" Command
+      select class="u-full-width" name="command"
+        option value="climb" climb
+        option value="optimize" optimize
+        option value="sim" sim
+    div class="six columns"
+      label for="cmd_count" Count
+      select class="u-full-width" name="cmd_count"
+        option value="1000" 1,000
+        option value="10000" 10,000
+        option value="100000" 100,000
+
+  label for="command_args" Command Args
+  input class="u-full-width" type="text" name="command_args"
+  input type="submit" name="enqueue" value="Submit"
+  input type="hidden" name="username" value="ctn"
