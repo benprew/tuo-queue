@@ -19,6 +19,7 @@ post '/queue/add' do
   your_deck = params['your_deck']
   enemy_deck = params['enemy_deck']
   command = params['command']
+  cmd_count = params['cmd_count']
 
   user.gsub! %r{[./\\]}, '_'
 
@@ -27,7 +28,7 @@ post '/queue/add' do
   job = "#{Time.now.iso8601}_#{user}.job"
 
   File.open("#{TuoQueue::QUEUE_DIR}/#{job}", 'w') do |f|
-    f.write %("#{your_deck}" "#{enemy_deck}" "#{command}")
+    f.write %("#{your_deck}" "#{enemy_deck}" "#{command}" "#{cmd_count}")
   end
 
   redirect '/queue/list'
