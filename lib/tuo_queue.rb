@@ -20,11 +20,11 @@ class TuoQueue
 
     FileUtils.mkdir_p COMPLETED_DIR
     File.open(completed_file, 'w') do |f|
-      f.write(job_cmd)
+      f.puts job_cmd
       output = `#{cmd}`
       warn "output: #{output}"
-      f.write(output)
-      f.write($!) if $? == 0
+      f.puts output
+      f.puts($!) if $? == 0
     end
 
     File.delete(job_filename)

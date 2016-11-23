@@ -7,6 +7,8 @@ class Result
   def initialize(result_file)
     file = "#{TuoQueue::COMPLETED_DIR}/#{result_file}"
     (@enqueue_time, @user) = result_file.split(/_/)
-    (@cmd, @output) = File.read(file).split("\n")
+    (@cmd, @output) = File.read(file).split("\n", 2)
+
+    @output.gsub!("\n", '<br>')
   end
 end
