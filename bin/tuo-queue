@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'bundler'
+require 'daemons'
+require_relative '../lib/tuo_queue'
+
+# Daemons.daemonize
+
+warn "starting up"
+
+loop do
+  job = Dir.glob("#{TuoQueue::QUEUE_DIR}/*").first
+  sleep 15 && next unless job
+
+  warn "processing job #{job}"
+
+  TuoQueue.process(File.basename(job))
+end

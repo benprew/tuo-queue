@@ -2,16 +2,19 @@
 
 require 'bundler'
 require 'sinatra'
+require_relative 'lib/tuo_queue'
+require_relative 'lib/job'
+require_relative 'lib/result'
 
 get '/' do
   slim :index
 end
 
-get '/enqueue' do
-  slim :enqueue
+get '/queue/add' do
+  slim :queue_add
 end
 
-post '/enqueue' do
+post '/queue/add' do
   user = params['username']
   your_deck = params['your_deck']
   enemy_deck = params['enemy_deck']
@@ -19,9 +22,31 @@ post '/enqueue' do
 
   user.gsub! %r{[./\\]}, '_'
 
-  Dir.mkdir("queue/#{user}") unless Dir.exist? "queue/#{user}"
+  FileUtils.mkdir_p(TuoQueue::QUEUE_DIR) unless Dir.exist? TuoQueue::QUEUE_DIR
 
-  File.open("queue/#{user}/#{Time.now.iso8601}.job", 'w') do |f|
-    f.write %("#{your_deck}" "#{enemy_deck}" "#{command}" -o )
+  job = "#{Time.now.iso8601}_#{user}.job"
+
+  File.open("#{TuoQueue::QUEUE_DIR}/#{job}", 'w') do |f|
+    f.write %("#{your_deck}" "#{enemy_deck}" "#{command}")
   end
+
+  redirect '/queue/list'
+end
+
+get '/queue/list' do
+  @results = TuoQueue.enqueued.map { |f| Job.new f }
+
+  slim :queue_list
+end
+
+get '/result/list' do
+  @results = TuoQueue.completed
+
+  slim :result_list
+end
+
+get '/result/:result_file' do
+  @result = Result.new params['result_file']
+
+  slim :result
 end

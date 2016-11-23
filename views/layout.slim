@@ -1,10 +1,23 @@
+doctype html
 html lang="en"
   head
     meta charset="utf-8"
     title Enqueue a job, ya bum!
-    link rel="stylesheet" href="Skeleton-2.0.4/css/normalize.css"
-    link rel="stylesheet" href="Skeleton-2.0.4/css/skeleton.css"
-    link rel="icon" href="Skeleton-2.0.4/images/favicon.png" type="image/png"
+    / Mobile specific metas
+    meta name="viewport" content="width=device-width, initial-scale=1"
+    link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css"
+    link rel="stylesheet" href="/css/normalize.css"
+    link rel="stylesheet" href="/css/skeleton.css"
+    link rel="stylesheet" href="/css/custom.css"
+    link rel="icon" href="/images/favicon.png" type="image/png"
   body
+    div class="nav"
+      ul
+        li
+          a href="/queue/add" Submit a sim job
+        li
+          a href="/queue/list" Queued sims
+        li
+          a href="/result/list" Sim Results
     div class="container"
       == yield
