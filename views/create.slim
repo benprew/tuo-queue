@@ -1,0 +1,45 @@
+form action="/job/create" method="post"
+  div class="row"
+    label for="your_deck" Your Deck
+    input type="text" name="your_deck" class="u-full-width" placeholder="Halcyon, Amon Matrix, Forged Rampart"
+
+    label for="enemy_deck" Enemy Deck
+    select name="enemy_deck"
+      option value="LV24BRACT" Level 24 Gauntlet
+      option value="Albatross Mutant" Albatross Mutant
+      option value="Excelsitus Mutant" Excelsitus Mutant
+      option value="Iron Mutant" Iron Mutant
+      option value="Miasma Mutant" Miasma Mutant
+      option value="Pandemonium Mutant" Pandemonium Mutant
+      option value="Protomech Mutant" Protomech Mutant
+      option value="Razogoth Mutant" Razogoth Mutant
+      option value="Serapherus Mutant" Serapherus Mutant
+      option value="Steel Mutant" Steel Mutant
+      option value="Supremacy Mutant" Supremacy Mutant
+      option value="Tyr Cannon Mutant" Tyr Cannon Mutant
+
+  label for="bge" Background Effects
+  input type="text" name="bge" class="u-full-width" placeholder="Divine Blessing"
+
+  label for="structs" Structures
+  input type="text" name="structs" class="u-full-width"
+
+  div class="row"
+    div class="four columns"
+      label for="command" Command
+      select class="u-full-width" name="command"
+        option value="climb" climb
+        option value="optimize" optimize
+        option value="sim" sim
+    div class="four columns"
+      label for="cmd_count" Count
+      select class="u-full-width" name="cmd_count"
+        option value="1000" 1,000
+        option value="10000" 10,000
+        option value="100000" 100,000
+    div class="four columns"
+      label for="fund" SP Fund (for suggesting fusions)
+      input class="u-full-width" type="text" name="fund" placeholder="1200"
+
+  input type="submit" name="enqueue" value="Submit"
+  input type="hidden" name="username" value="ctn"

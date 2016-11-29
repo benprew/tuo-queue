@@ -2,6 +2,7 @@
 
 require 'bundler'
 require 'sinatra'
+require 'JSON'
 require_relative 'lib/tuo_queue'
 require_relative 'lib/job'
 require_relative 'lib/result'
@@ -10,11 +11,11 @@ get '/' do
   slim :index
 end
 
-get '/queue/add' do
-  slim :queue_add
+get '/job/create' do
+  slim :create
 end
 
-post '/queue/add' do
+post '/job/create' do
   user = params['username']
   your_deck = params['your_deck']
   enemy_deck = params['enemy_deck']
@@ -23,31 +24,34 @@ post '/queue/add' do
 
   user.gsub! %r{[./\\]}, '_'
 
-  FileUtils.mkdir_p(TuoQueue::QUEUE_DIR) unless Dir.exist? TuoQueue::QUEUE_DIR
+  job = Job.new
 
-  job = "#{Time.now.iso8601}_#{user}.job"
+  cmd = %("#{your_deck}" "#{enemy_deck}" "#{command}" "#{cmd_count}")
 
-  File.open("#{TuoQueue::QUEUE_DIR}/#{job}", 'w') do |f|
-    f.write %("#{your_deck}" "#{enemy_deck}" "#{command}" "#{cmd_count}")
+  if command == 'climb' && params['fund']
+    cmd += " fund #{params['fund']}"
   end
 
-  redirect '/queue/list'
+  job.command = cmd
+  job.user = user
+  job.save
+
+  redirect "/job/#{job.id}"
 end
 
-get '/queue/list' do
-  @results = TuoQueue.enqueued.map { |f| Job.new f }
+get '/job/queued/list' do
+  @results = Job.queued
 
-  slim :queue_list
+  slim :list_queued
 end
 
-get '/result/list' do
-  @results = TuoQueue.completed
+get '/job/completed/list' do
+  @results = Job.completed
 
-  slim :result_list
+  slim :list_completed
 end
 
-get '/result/:result_file' do
-  @result = Result.new params['result_file']
-
-  slim :result
+get '/job/:id' do
+  @job = Job.where(id: params['id']).first
+  slim :job
 end

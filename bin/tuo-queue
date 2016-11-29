@@ -2,17 +2,17 @@
 
 require 'bundler'
 require 'daemons'
-require_relative '../lib/tuo_queue'
+require_relative '../lib/job'
 
 # Daemons.daemonize
 
-warn "starting up"
+warn 'starting up'
 
 loop do
-  job = Dir.glob("#{TuoQueue::QUEUE_DIR}/*").first
+  job = Job.queued.first
   sleep 15 && next unless job
 
   warn "processing job #{job}"
 
-  TuoQueue.process(File.basename(job))
+  job.process
 end

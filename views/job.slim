@@ -1,0 +1,7 @@
+h3 Details
+ul
+  li= "Queue Time: #{@job.created_at}"
+  li= "Command: #{@job.command}"
+
+h3 Result
+p== @job.output
