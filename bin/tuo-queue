@@ -10,9 +10,14 @@ warn 'starting up'
 
 loop do
   job = Job.queued.first
-  sleep 15 && next unless job
+  unless job
+    sleep 30
+    next
+  end
 
   warn "processing job #{job}"
 
-  job.process
+  job.perform
+
+  warn 'job complete'
 end

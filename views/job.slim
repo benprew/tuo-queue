@@ -1,7 +1,12 @@
-h3 Details
-ul
-  li= "Queue Time: #{@job.created_at}"
-  li= "Command: #{@job.command}"
+- unless @job
+  h3 No job found
 
-h3 Result
-p== @job.output
+- else
+
+  h3 Details
+  ul
+    li= "Queue Time: #{@job.created_at}"
+    li= "Command: #{@job.command}"
+  
+  h3 Result
+  pre== @job.output

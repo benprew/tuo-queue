@@ -1,0 +1,19 @@
+- if @jobs.empty?
+  p No jobs queued
+- else
+  table
+    thead
+      tr
+        th User
+        th Sim
+        th Queued at
+        th Ran at
+    tbody
+      - @jobs.each do |job|
+        tr
+          td= job.user
+          td
+            a href="/job/#{job.id}"= job.name
+          td= job.created_at
+          td= job.completed_at
+          

@@ -22,16 +22,25 @@ post '/job/create' do
   command = params['command']
   cmd_count = params['cmd_count']
 
-  user.gsub! %r{[./\\]}, '_'
+  user.gsub!(/[^a-zA-Z0-9]+/, '_')
+
+  inventory_file = "/tmp/#{user}.txt"
+  # save inventory file
+  File.open(inventory_file, 'w') do |f|
+    f.write(params['myfile'][:tempfile].read)
+  end
 
   job = Job.new
+  job.created_at = Time.now
 
-  cmd = %("#{your_deck}" "#{enemy_deck}" "#{command}" "#{cmd_count}")
+  cmd = "'#{your_deck}' '#{enemy_deck}' '#{command}' '#{cmd_count}' " \
+        "-o='#{inventory_file}'"
 
   if command == 'climb' && params['fund']
     cmd += " fund #{params['fund']}"
   end
 
+  job.name = "vs. #{enemy_deck} (#{command})"
   job.command = cmd
   job.user = user
   job.save
@@ -40,15 +49,15 @@ post '/job/create' do
 end
 
 get '/job/queued/list' do
-  @results = Job.queued
+  @jobs = Job.queued
 
-  slim :list_queued
+  slim :list
 end
 
 get '/job/completed/list' do
-  @results = Job.completed
+  @jobs = Job.completed
 
-  slim :list_completed
+  slim :list
 end
 
 get '/job/:id' do

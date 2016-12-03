@@ -3,11 +3,14 @@ require 'bundler'
 require 'sequel'
 require 'sqlite3'
 
+TUO_DIR='/var/local/tuo-queue/tuo'
+
 # TODO: convert to sqllite-backed store.
 DB = Sequel.sqlite('/var/local/tuo-queue/job.sqlite3')
 
 DB.create_table? :jobs do
   primary_key :id
+  String :name
   String :command
   String :output
   String :user
@@ -30,8 +33,6 @@ class Job < Sequel::Model
     self.output = `#{job_cmd}`
     self.completed_at = Time.now
     save
-
-    queued_job && queued_job.delete
   end
 
   def self.completed
