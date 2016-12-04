@@ -2,7 +2,7 @@
 
 require 'bundler'
 require 'sinatra'
-require 'JSON'
+require 'json'
 require_relative 'lib/tuo_queue'
 require_relative 'lib/job'
 require_relative 'lib/result'
