@@ -1,39 +1,59 @@
-form action="/job/create" method="post"
-  label for="username" Username
-  input type="text" name="username" class="u-full-width"
+form action="/job/create" method="post" enctype="multipart/form-data"
+  div class="row"
+    div class="six columns"
+      label for="username" Username
+      input type="text" name="username" class="u-full-width"
+    div class="six columns"
+      label for="your_inventory" Your Inventory
+      input type="file" name="your_inventory" class="u-full-width"
   
   div class="row"
-    label for="your_deck" Your Deck
-    input type="text" name="your_deck" class="u-full-width" placeholder="ex. Halcyon, Amon Matrix, Forged Rampart"
+    div class="six columns"
+      label for="your_deck" Your Deck
+      input type="text" name="your_deck" class="u-full-width" placeholder="ex. Halcyon, Amon Matrix, Forged Rampart"
 
-    label for="enemy_deck" Enemy Deck
-    select name="enemy_deck"
-      option value="LV24BRACT" Level 24 Gauntlet
-      option value="Albatross Mutant" Albatross Mutant
-      option value="Excelsitus Mutant" Excelsitus Mutant
-      option value="Iron Mutant" Iron Mutant
-      option value="Miasma Mutant" Miasma Mutant
-      option value="Pandemonium Mutant" Pandemonium Mutant
-      option value="Protomech Mutant" Protomech Mutant
-      option value="Razogoth Mutant" Razogoth Mutant
-      option value="Serapherus Mutant" Serapherus Mutant
-      option value="Shot the Sheriff" Shot the Sheriff
-      option value="Steel Mutant" Steel Mutant
-      option value="Supremacy Mutant" Supremacy Mutant
-      option value="Tyr Cannon Mutant" Tyr Cannon Mutant
+    div class="six columns"
+      label for="your_structs" Your Structures (comma-separated)
+      input type="text" name="your_structs" class="u-full-width"
 
-  label for="bge" Background Effects
-  input type="text" name="bge" class="u-full-width" placeholder="Divine Blessing"
+  div class="row"
+    div class="four columns"
+      label for="enemy_deck" Enemy Deck
+      select name="enemy_deck"
+        option value="LV24BRACT" Level 24 Gauntlet
+        option value="Albatross Mutant" Albatross Mutant
+        option value="Excelsitus Mutant" Excelsitus Mutant
+        option value="Iron Mutant" Iron Mutant
+        option value="Miasma Mutant" Miasma Mutant
+        option value="Pandemonium Mutant" Pandemonium Mutant
+        option value="Power of Phobos" Power of Phobos
+        option value="Protomech Mutant" Protomech Mutant
+        option value="Razogoth Mutant" Razogoth Mutant
+        option value="Serapherus Mutant" Serapherus Mutant
+        option value="Shot the Sheriff" Shot the Sheriff
+        option value="Steel Mutant" Steel Mutant
+        option value="Supremacy Mutant" Supremacy Mutant
+        option value="Tyr Cannon Mutant" Tyr Cannon Mutant
 
-  label for="structs" Structures
-  input type="text" name="structs" class="u-full-width"
+    div class="two columns"
+        label for="enemy_level" Enemy Level
+        input type="text" name="enemy_level" value=10 class="u-full-width"
+
+    div class="six columns"
+        label for="enemy_structs" Enemy Structures (comma-separated)
+        input type="text" name="enemy_structs" class="u-full-width"
+
+  label for="bge" Battleground Effects
+  select name="bge"
+    - @bges.each do |bge|
+      option value="#{bge[0]}"= bge[1]
 
   div class="row"
     div class="four columns"
       label for="command" Command
       select class="u-full-width" name="command"
         option value="climb" climb
-        option value="optimize" optimize
+        option value="reorder" reorder
         option value="sim" sim
     div class="four columns"
       label for="cmd_count" Count

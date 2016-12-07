@@ -36,10 +36,10 @@ class Job < Sequel::Model
   end
 
   def self.completed
-    Job.exclude(completed_at: nil)
+    Job.exclude(completed_at: nil).reverse_order(:completed_at)
   end
 
   def self.queued
-    Job.where(completed_at: nil)
+    Job.where(completed_at: nil).reverse_order(:created_at)
   end
 end

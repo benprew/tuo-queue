@@ -7,6 +7,8 @@
   ul
     li= "Queue Time: #{@job.created_at}"
     li= "Command: #{@job.command}"
+    - if @job.output
+      li= @job.output.split("\n").last
   
   h3 Result
   pre== @job.output
