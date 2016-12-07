@@ -11,7 +11,7 @@ warn 'starting up'
 loop do
   job = Job.queued.first
   unless job
-    sleep 30
+    sleep 5
     next
   end
 
