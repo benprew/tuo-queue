@@ -39,6 +39,11 @@ class Job < Sequel::Model
     Job.exclude(completed_at: nil).reverse_order(:completed_at)
   end
 
+  # sqlite doesn't have NULLS FIRST, so we fake it 
+  def self.list
+    Job.reverse_order(Sequel.lit 'completed_at is null').order_more(Sequel.desc(:completed_at))
+  end
+
   def self.queued
     Job.where(completed_at: nil).reverse_order(:created_at)
   end

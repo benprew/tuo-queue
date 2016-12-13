@@ -20,9 +20,9 @@ end
 
 post '/job/create' do
   cmd_args = []
-  your_deck = params['your_deck']
-  enemy_deck = params['enemy_deck']
-  command = params['command']
+  your_deck = params['your_deck'].tr("'", '')
+  enemy_deck = params['enemy_deck'].tr("'", '')
+  command = params['command'].tr("'", '')
   cmd_count = params['cmd_count']
   user = params['username'].gsub(/[^a-zA-Z0-9]+/, '_').downcase
   inventory_file = "/tmp/#{user}.txt"
@@ -69,6 +69,12 @@ end
 
 get '/job/completed/list' do
   @jobs = Job.completed
+
+  slim :list
+end
+
+get '/job/list' do
+  @jobs = Job.list
 
   slim :list
 end
