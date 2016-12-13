@@ -8,7 +8,7 @@
     li= "Queue Time: #{@job.created_at}"
     li= "Command: #{@job.command}"
     - if @job.output
-      li= @job.output.split("\n").last
+      li== @job.output.split("\n").last.gsub(/:/, '<br/>')
   
   h3 Result
   pre== @job.output
