@@ -47,6 +47,7 @@ form action="/job/create" method="post" enctype="multipart/form-data"
 
   label for="bge" Battleground Effects
   select name="bge"
+    option value="" None
     - @bges.each do |bge|
       option value="#{bge[0]}"= bge[1]
 
