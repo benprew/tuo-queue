@@ -40,8 +40,11 @@ post '/job/create' do
 
   ed_cmd = "'#{enemy_deck + (enemy_deck =~ /LV24/ ? '' : "-#{params['enemy_level']}")}'"
 
+  p params
+
   cmd_args << "'#{your_deck}'"
   cmd_args << ed_cmd
+  cmd_args << '-r' if params['ordered']
   cmd_args << "'#{command}'"
   cmd_args << "'#{cmd_count}'"
   cmd_args << "-e '#{params['bge']}'" unless params['bge'].empty?
