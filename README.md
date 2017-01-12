@@ -23,7 +23,7 @@ In the root directory of the repo run:
 
 How to post a sim job programatically
 
-`POST` to `/create`
+`POST` to `/job/create`
 
 | Param | Description |
 |-------|-------------|
