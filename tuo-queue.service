@@ -1,0 +1,19 @@
+# Copy to /etc/systemd/system/tuo-queue.service
+
+[Unit]
+Description=The tuo-queue queue service
+
+[Service]
+ExecStart=/usr/local/bin/bundle exec /var/local/tuo-queue/bin/tuo-queue
+WorkingDirectory=/var/local/tuo-queue
+Restart=always
+# Restart service after 10 seconds
+RestartSec=10
+# Output to syslog
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=tuo-queue
+
+[Install]
+WantedBy=multi-user.target
+

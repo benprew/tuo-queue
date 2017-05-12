@@ -1,0 +1,19 @@
+# Copy to /etc/systemd/system/tuo-web.service
+
+[Unit]
+Description=The tuo-queue web server
+
+[Service]
+ExecStart=/usr/local/bin/bundle exec /var/local/tuo-queue/web.rb -p 4567 -o 127.0.0.1
+WorkingDirectory=/var/local/tuo-queue
+Restart=always
+# Restart service after 10 seconds
+RestartSec=10
+# Output to syslog
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=tuo-web
+
+[Install]
+WantedBy=multi-user.target
+
