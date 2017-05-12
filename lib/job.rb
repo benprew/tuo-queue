@@ -3,9 +3,6 @@ require 'bundler'
 require 'sequel'
 require 'sqlite3'
 
-TUO_DIR='/var/local/tuo-queue/tuo'
-
-# TODO: convert to sqllite-backed store.
 DB = Sequel.sqlite('/var/local/tuo-queue/job.sqlite3')
 
 DB.create_table? :jobs do
@@ -19,6 +16,8 @@ DB.create_table? :jobs do
 end
 
 class Job < Sequel::Model
+  TUO_DIR='/var/local/tuo-queue/tuo'
+
   attr_reader :queue_time, :job_id
 
   def perform
@@ -29,19 +28,20 @@ class Job < Sequel::Model
 
     job_cmd = "cd #{TUO_DIR} && ./tuo #{command} 2>&1"
     warn job_cmd
+    output = `#{job_cmd} 2>/tmp/#{job_id}.log`
+    warn output
 
-    self.output = `#{job_cmd}`
+    self.output = output
     self.completed_at = Time.now
     save
   end
 
   def self.completed
-    Job.exclude(completed_at: nil).reverse_order(:completed_at)
+    Job.exclude(completed_at: nil).reverse_order(:created_at)
   end
 
-  # sqlite doesn't have NULLS FIRST, so we fake it 
   def self.list
-    Job.reverse_order(Sequel.lit 'completed_at is null').order_more(Sequel.desc(:completed_at))
+    Job.reverse_order(:created_at)
   end
 
   def self.queued

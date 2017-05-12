@@ -3,12 +3,13 @@
 
 - else
 
-  h3 Details
+  h3= "#{@job.user} #{@job.name}"
   ul
+    - if @job.output && !@job.output.empty?
+      li
+        pre== @job.output.split("\n").last.gsub(/[:,]/, '<br/>')
     li= "Queue Time: #{@job.created_at}"
     li= "Command: #{@job.command}"
-    - if @job.output
-      li== @job.output.split("\n").last.gsub(/:/, '<br/>')
   
-  h3 Result
+  h3 Output
   pre== @job.output

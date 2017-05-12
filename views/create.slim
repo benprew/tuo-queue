@@ -4,9 +4,8 @@ form action="/job/create" method="post" enctype="multipart/form-data"
       label for="username" Username
       input type="text" name="username" class="u-full-width"
     div class="six columns"
-      label for="your_inventory" Your Inventory
-      input type="file" name="your_inventory" class="u-full-width"
-  
+      label for="your_inventory_file" Your Inventory
+      input type="file" name="your_inventory_file" class="u-full-width"
   div class="row"
     div class="six columns"
       label for="your_deck" Your Deck
@@ -17,27 +16,19 @@ form action="/job/create" method="post" enctype="multipart/form-data"
     div class="six columns"
       label for="your_structs" Your Structures (comma-separated)
       input type="text" name="your_structs" class="u-full-width"
-
+      label for="mode" Mode
+      select name="mode"
+        option value="fight" Fight (you play first)
+        option value="surge" Surge (enemy plays first)
   div class="row"
     div class="four columns"
       label for="enemy_deck" Enemy Deck
       select name="enemy_deck"
-        option value="LV24BRACT" Level 24 Gauntlet (Attack)
-        option value="LV24BRDEF" Level 24 Gauntlet (Defense)
-        option value="Albatross Mutant" Albatross Mutant
-        option value="Dracorex's Deception" Dracorex's Deception
-        option value="Excelsitus Mutant" Excelsitus Mutant
-        option value="Iron Mutant" Iron Mutant
-        option value="Miasma Mutant" Miasma Mutant
-        option value="Pandemonium Mutant" Pandemonium Mutant
-        option value="Power of Phobos" Power of Phobos
-        option value="Protomech Mutant" Protomech Mutant
-        option value="Razogoth Mutant" Razogoth Mutant
-        option value="Serapherus Mutant" Serapherus Mutant
-        option value="Shot the Sheriff" Shot the Sheriff
-        option value="Steel Mutant" Steel Mutant
-        option value="Supremacy Mutant" Supremacy Mutant
-        option value="Tyr Cannon Mutant" Tyr Cannon Mutant
+        option value="LV24BR" ATK Decks Gauntlet
+        option value="LV24BR" DEF Decks Gauntlet
+        option value="LV24BR" Japaneseman Gauntlet
+        - missions.each do |mission|
+          option value="#{mission}"= mission
 
     div class="two columns"
         label for="enemy_level" Enemy Level
@@ -46,12 +37,12 @@ form action="/job/create" method="post" enctype="multipart/form-data"
     div class="six columns"
         label for="enemy_structs" Enemy Structures (comma-separated)
         input type="text" name="enemy_structs" class="u-full-width"
-
+  hr
   label for="bge" Battleground Effects
   select name="bge"
     option value="" None
-    - @bges.each do |bge|
-      option value="#{bge[0]}"= bge[1]
+    - bges.each do |bge|
+      option value="#{bge}"= bge
 
   div class="row"
     div class="four columns"
