@@ -36,6 +36,16 @@ class Job < Sequel::Model
     save
   end
 
+  def status
+    if completed_at && output
+      :complete
+    elsif completed_at
+      :failed
+    else
+      :running
+    end
+  end
+
   def self.completed
     Job.exclude(completed_at: nil).reverse_order(:created_at)
   end
