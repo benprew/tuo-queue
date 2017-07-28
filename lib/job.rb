@@ -28,7 +28,7 @@ class Job < Sequel::Model
 
     job_cmd = "cd #{TUO_DIR} && ./tuo #{command} 2>&1"
     warn job_cmd
-    output = `#{job_cmd} 2>/tmp/#{job_id}.log`
+    output = `#{job_cmd}`
     warn output
 
     self.output = output
