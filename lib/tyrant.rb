@@ -8,7 +8,7 @@ class Tyrant
   include HTTParty
   base_uri 'http://mobile.tyrantonline.com'
 
-  CONFIG_FILE = "#{ENV['HOME']}/.tyrant_config"
+  CONFIG_FILE = "/home/throwingbones/.tyrant_config"
   def self.load_config
     return unless File.exist? CONFIG_FILE
     @config = JSON.parse(File.read(CONFIG_FILE))
@@ -53,6 +53,13 @@ class Tyrant
   def self.card_id_to_name(id)
     @cards ||= JSON.parse(File.read(CARDS_FILE))
     "#{@cards[id.to_s]['name']}-#{@cards[id.to_s]['level']}"
+  rescue
+    update_cards
+    retry
+  end
+
+  def self.update_cards
+    @cards = JSON.parse(File.read(CARDS_FILE))
   end
 
   load_config
