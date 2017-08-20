@@ -4,6 +4,7 @@ require 'bundler'
 require 'sinatra'
 require 'json'
 require 'ostruct'
+require 'date'
 require_relative 'lib/job'
 require_relative 'lib/player'
 
@@ -34,7 +35,7 @@ post '/job/create' do
   response.set_cookie(
     'player',
     value: params['username'],
-    expires: Date.today + 30,
+    expires: (Date.today + 30).to_time,
     path: '/'
   )
 
