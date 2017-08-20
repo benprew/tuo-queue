@@ -4,7 +4,7 @@
   select onchange="this.form.submit()"
     option value="" All Players
     - @players.each do |player|
-      option value="#{player}" "#{@current_user == player ? 'selected' : ''}"= player
+      option value="#{player}"= player
   table
     thead
       tr
