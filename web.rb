@@ -94,7 +94,7 @@ end
 
 get '/job/list' do
   @jobs = Job.list
-  @players = jobs.map(&:user).uniq.compact.sort
+  @players = @jobs.map(&:user).uniq.compact.sort
 
   slim :list
 end
