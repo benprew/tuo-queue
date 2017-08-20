@@ -1,6 +1,10 @@
 - if @jobs.empty?
   p No jobs queued
 - else
+  select onchange="this.form.submit()"
+    option value="" All Players
+    - @players.each do |player|
+      option value="#{player}" "#{@current_user == player ? 'selected' : ''}"= player
   table
     thead
       tr

@@ -31,6 +31,13 @@ end
 post '/job/create' do
   cmd_args = []
 
+  response.set_cookie(
+    'player',
+    value: params['username'],
+    expires: Time.now + 30.days,
+    path: '/'
+  )
+
   enemy_deck = params['enemy_deck'].tr("'", '')
   command = params['command'].tr("'", '')
   cmd_count = params['cmd_count']
@@ -87,6 +94,7 @@ end
 
 get '/job/list' do
   @jobs = Job.list
+  @players = jobs.map(&:user).uniq.compact.sort
 
   slim :list
 end
