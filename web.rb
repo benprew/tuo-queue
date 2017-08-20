@@ -20,7 +20,7 @@ end
 get '/job/raid_job' do
   @structures = File.read('raid_structs.txt')
   @enemy_level = 21
-  @enemy_decks = File.read('current_raid.txt')
+  @enemy_decks = File.read('current_raid.txt').split("\n")
   slim :simple_job
 end
 
