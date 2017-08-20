@@ -12,6 +12,15 @@ get '/' do
 end
 
 get '/job/simple_job' do
+  @enemy_level = 10
+  @enemy_decks = missions + [OpenStruct.new(name: :Gauntlet, value: :LV24BR)]
+  slim :simple_job
+end
+
+get '/job/raid_job' do
+  @structures = File.read('raid_structs.txt')
+  @enemy_level = 21
+  @enemy_decks = File.read('current_raid.txt')
   slim :simple_job
 end
 

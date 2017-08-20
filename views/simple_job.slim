@@ -3,25 +3,25 @@ form action="/job/create" method="post" enctype="multipart/form-data"
     div class="six columns"
       label for="username" Username
       select name="username"
-        - Player.all.each do |player|
+        - Player.all.sort_by(&:name).each do |player|
           option value="#{player.slug}"= "#{player.name} - #{player.guild}"
     div class="six columns"
       label for="your_structs" Your Structures (comma-separated)
-      input type="text" name="your_structs" class="u-full-width"
+      input type="text" name="your_structs" class="u-full-width" value=@structures
 
   div class="row"
     div class="four columns"
       label for="enemy_deck" Enemy Deck
       select name="enemy_deck"
-        option value="LV24BR" DEF Decks Gauntlet
-        option value="LV24BR" ATK Decks Gauntlet
-        option value="LV24BR" Japaneseman Gauntlet
-        - missions.each do |mission|
-          option value="#{mission}"= mission
+        - @enemy_decks.each do |deck|
+          - if deck.is_a?(OpenStruct)
+            option value="#{deck.value}"= deck.name
+          - else
+            option value="#{deck}"= deck
 
     div class="two columns"
         label for="enemy_level" Enemy Level
-        input type="text" name="enemy_level" value=10 class="u-full-width"
+        input type="text" name="enemy_level" value=@enemy_level class="u-full-width"
 
     div class="six columns"
         label for="enemy_structs" Enemy Structures (comma-separated)
@@ -38,15 +38,15 @@ form action="/job/create" method="post" enctype="multipart/form-data"
       input class="u-full-width" type="text" name="fund" placeholder="1200"
 
   div class="row"
-    strong BGE: 
+    strong BGE:
     br
     input type="radio" name="bge" checked="true" value=""= " None"
     - bges.each do |bge|
       br
       input type="radio" name="bge" value="#{bge}"= " #{bge}"
     p
-      strong Deck: 
-      input type="checkbox" name="ordered" checked="true" value="ordered"  Ordered 
+      strong Deck:
+      input type="checkbox" name="ordered" checked="true" value="ordered"  Ordered
   input type="hidden" name="command" value="climb"
   input type="hidden" name="cmd_count" value="10000"
   input type="hidden" name="ordered" value="checked"
