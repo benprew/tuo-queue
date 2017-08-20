@@ -23,6 +23,6 @@ class Loki
   end
 
   def self.cards_url(id)
-    "/player/#{id}/cards"
+    "/ownedcard/#{id}/cards"
   end
 end
