@@ -34,7 +34,7 @@ post '/job/create' do
   response.set_cookie(
     'player',
     value: params['username'],
-    expires: Time.now + 30.days,
+    expires: Date.today + 30,
     path: '/'
   )
 
