@@ -42,12 +42,13 @@ class Player < Sequel::Model
 
   private
 
-  def tyrant_deck 
+  def tyrant_deck
     return nil unless tyrant_id
 
     mate = Tyrant.guildmate(guild, tyrant_id)
     return nil unless mate
-    Tyrant.card_ids_to_name([mate['deck']['commander_id']] + mate['deck']['cards'])
+    deck = Tyrant.card_ids_to_name([mate['deck']['commander_id']] + mate['deck']['cards'])
+    deck.any? ? deck : nil
   end
 
   def loki_deck
@@ -64,9 +65,10 @@ class Player < Sequel::Model
 
   def tyrant_inventory
     return nil unless tyrant_id
-    Tyrant.inventory(guild, user_id: tyrant_id)
+    inv = Tyrant.inventory(guild, user_id: tyrant_id)
+    inv.any? ? inv : nil
   end
- 
+
   def defense_deck
     @info['defense_deck']
   end

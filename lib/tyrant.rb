@@ -37,7 +37,7 @@ class Tyrant
 
   def self.inventory(guild, params)
     api_request(guild, 'init', params)['user_cards']
-      .map{ |id, v| [id.to_i, v['num_owned'].to_i] }
+      .map { |id, v| [id.to_i, v['num_owned'].to_i] }
       .select { |e| e[1] > 0 }
       .map { |info| "#{card_id_to_name(info[0])} (#{info[1]})" }
   end
@@ -64,4 +64,3 @@ class Tyrant
 
   load_config
 end
-
