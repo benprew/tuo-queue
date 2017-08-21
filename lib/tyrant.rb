@@ -40,6 +40,8 @@ class Tyrant
       .map { |id, v| [id.to_i, v['num_owned'].to_i] }
       .select { |e| e[1] > 0 }
       .map { |info| "#{card_id_to_name(info[0])} (#{info[1]})" }
+  rescue NoMethodError
+    []
   end
 
   def self.guildmate(guild, player_id)
