@@ -41,11 +41,17 @@ class Tyrant
       .select { |e| e[1] > 0 }
       .map { |info| "#{card_id_to_name(info[0])} (#{info[1]})" }
   rescue NoMethodError
-    []
+    nil
   end
 
   def self.guildmate(guild, player_id)
     api_request(guild, 'getProfileData', target_user_id: player_id)['player_info']
+  end
+
+  def self.deck(guild, player_id)
+    mate = guildmate(guild, player_id)
+    return nil unless mate
+    card_ids_to_name([mate['deck']['commander_id']] + mate['deck']['cards'])
   end
 
   def self.card_ids_to_name(ids)

@@ -2,6 +2,7 @@
 
 require 'bundler'
 require 'daemons'
+require 'dotenv/load'
 require_relative '../lib/job'
 
 # Daemons.daemonize

@@ -6,6 +6,7 @@ GEM
     daemons (1.2.4)
     domain_name (0.5.20170223)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.2.1)
     eventmachine (1.2.1)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
@@ -74,6 +75,7 @@ PLATFORMS
 
 DEPENDENCIES
   daemons
+  dotenv
   httparty
   mechanize
   nokogiri

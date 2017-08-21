@@ -29,6 +29,8 @@ class Player < Sequel::Model
 
   def update_deck_and_inventory
     self.tyrant_id = guess_tyrant_id unless tyrant_id
+    puts "===>Tyrant_deck: #{tyrant_deck} #{loki_deck}"
+    puts "===>Invetory: #{tyrant_inventory}"
     self.deck = (tyrant_deck || loki_deck || deck).to_json
     self.inventory = (tyrant_inventory || loki_inventory).to_json
     save
@@ -44,11 +46,7 @@ class Player < Sequel::Model
 
   def tyrant_deck
     return nil unless tyrant_id
-
-    mate = Tyrant.guildmate(guild, tyrant_id)
-    return nil unless mate
-    deck = Tyrant.card_ids_to_name([mate['deck']['commander_id']] + mate['deck']['cards'])
-    deck.any? ? deck : nil
+    Tyrant.deck(guild, tyrant_id)
   end
 
   def loki_deck
@@ -65,8 +63,7 @@ class Player < Sequel::Model
 
   def tyrant_inventory
     return nil unless tyrant_id
-    inv = Tyrant.inventory(guild, user_id: tyrant_id)
-    inv.any? ? inv : nil
+    Tyrant.inventory(guild, user_id: tyrant_id)
   end
 
   def defense_deck

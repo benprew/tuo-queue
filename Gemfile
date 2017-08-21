@@ -1,8 +1,9 @@
 source 'http://rubygems.org'
 
-gem 'mechanize' # for downloading players and inventory
 gem 'daemons' # for tuo-queue
+gem 'dotenv'
 gem 'httparty'
+gem 'mechanize' # for downloading players and inventory
 gem 'nokogiri'
 gem 'pry'
 gem 'sequel'

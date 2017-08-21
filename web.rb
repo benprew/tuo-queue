@@ -6,6 +6,7 @@ require 'sinatra/cookies'
 require 'json'
 require 'ostruct'
 require 'date'
+require 'dotenv/load'
 require_relative 'lib/job'
 require_relative 'lib/player'
 
