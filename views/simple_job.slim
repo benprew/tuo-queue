@@ -3,7 +3,7 @@ form action="/job/create" method="post" enctype="multipart/form-data"
     div class="six columns"
       label for="username" Username
       select name="username"
-        - Player.all.sort_by(&:name).each do |player|
+        - Player.all.sort_by { |p| p.name.downcase }.each do |player|
           option value="#{player.slug}"= "#{player.name} - #{player.guild}"
     div class="six columns"
       label for="your_structs" Your Structures (comma-separated)
