@@ -2,6 +2,7 @@
 
 require 'bundler'
 require 'sinatra'
+require 'sinatra/cookies'
 require 'json'
 require 'ostruct'
 require 'date'
@@ -19,9 +20,9 @@ get '/job/simple_job' do
 end
 
 get '/job/raid_job' do
-  @structures = File.read('raid_structs.txt')
+  @structures = read_file('raid_structs.txt').join(',')
+  @enemy_decks = read_file('current_raid.txt')
   @enemy_level = 21
-  @enemy_decks = File.read('current_raid.txt').split("\n")
   slim :simple_job
 end
 
@@ -32,17 +33,11 @@ end
 post '/job/create' do
   cmd_args = []
 
-  response.set_cookie(
-    'player',
-    value: params['username'],
-    expires: (Date.today + 30).to_time,
-    path: '/'
-  )
-
   enemy_deck = params['enemy_deck'].tr("'", '')
   command = params['command'].tr("'", '')
   cmd_count = params['cmd_count']
   user = params['username'].gsub(/[^a-zA-Z0-9]+/, '_').downcase
+  cookies['player'] = user
 
   job = Job.new
   job.created_at = Time.now
@@ -94,8 +89,9 @@ get '/job/completed/list' do
 end
 
 get '/job/list' do
-  @jobs = Job.list
-  @players = @jobs.map(&:user).uniq.compact.sort
+  @pf = player_filter
+  @players = Job.list.map(&:user).uniq.compact.sort
+  @jobs = @pf ? Job.list.where(user: @pf) : Job.list
 
   slim :list
 end
@@ -103,10 +99,6 @@ end
 get '/job/:id' do
   @job = Job.where(id: params['id']).first
   slim :job
-end
-
-def missions
-  File.read('missions.txt').split(/\n/)
 end
 
 def your_deck(params)
@@ -125,8 +117,6 @@ def your_deck(params)
 end
 
 def inventory(params, user)
-  inventory_file = nil
-
   # update from form
   if params['your_inventory_file']
     inventory_file = "/tmp/#{user}.txt"
@@ -151,14 +141,21 @@ def inventory(params, user)
 end
 
 def bges
-  File.read("bges.txt")
-    .split(/\n/)
+  read_file 'bges.txt'
 end
 
-def guild_decks
-  File.read("#{Job::TUO_DIR}/data/customdecks_ctn.txt")
-    .split(/\n/)
-    .select { |l| l =~ /:/ }
-    .map { |l| l.split(':')[0] }
-    .sort
+def missions
+  read_file 'missions.txt'
+end
+
+def read_file(file)
+  File.read(file).split(/\n/)
+rescue Errno::ENOENT
+  []
+end
+
+def player_filter
+  return nil if params['player'] == ''
+
+  params['player'] || request.cookies['player']
 end
