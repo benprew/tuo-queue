@@ -7,7 +7,7 @@ div class="container"
         i "Card list updated at: #{Date.today - 1}"
 
     div class="nine columns"
-      h3 General SIMs
+      h3 General SIM files
       div class="row"
         h4 Missions
         a href="/admin/edit_file?type=missions" class="button" edit
@@ -25,7 +25,7 @@ div class="container"
         a href="/admin/edit_file?type=bges" class="button" edit
         pre= read_file(filename_for_type('bges')).join("\n")
 
-      h3 Raid SIMs
+      h3 Raid SIM files
       div class="row"
         h4 Mission
         a href="/admin/edit_file?type=raid" class="button" edit
