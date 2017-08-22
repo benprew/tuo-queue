@@ -14,6 +14,23 @@ get '/' do
   slim :index
 end
 
+get '/admin' do
+  slim :admin
+end
+
+get '/admin/edit_file' do
+  @type = params['type']
+  @data = read_file(filename_for_type(@type)).join("\n")
+
+  slim :edit_file
+end
+
+post '/admin/edit_file' do
+  type = params['type']
+  File.write(filename_for_type(type), params['data'])
+  redirect '/admin'
+end
+
 get '/job/simple_job' do
   @enemy_level = 10
   @enemy_decks = missions + [OpenStruct.new(name: :Gauntlet, value: :LV24BR)]
@@ -142,17 +159,34 @@ def inventory(params, user)
 end
 
 def bges
-  read_file 'bges.txt'
+  read_file filename_for_type('bges')
 end
 
 def missions
-  read_file 'missions.txt'
+  read_file filename_for_type('missions')
 end
 
 def read_file(file)
   File.read(file).split(/\n/)
 rescue Errno::ENOENT
   []
+end
+
+def filename_for_type(type)
+  case type
+  when 'gauntlet'
+    'tuo/data/customdecks_gauntlets.txt'
+  when 'raid'
+    'current_raid.txt'
+  when 'raid_structs'
+    'raid_structs.txt'
+  when 'missions'
+    'missions.txt'
+  when 'bges'
+    'bges.txt'
+  else
+    raise "unknown type: #{type}"
+  end
 end
 
 def player_filter

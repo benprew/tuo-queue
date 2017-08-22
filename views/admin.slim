@@ -1,0 +1,39 @@
+div class="container"
+  div class="row"
+    div class="three columns"
+      div
+        i "TUO updated at: xxxx"
+        button Update TUO
+      div
+        i "Card list updated at: xxxx"
+        button Update cards.xml
+
+    div class="nine columns"
+      h3 General SIMs
+      div class="row"
+        h4 Missions
+        a href="/admin/edit_file?type=missions" class="button" edit
+        pre= read_file(filename_for_type('missions')).join("\n")
+
+      div class="row"
+        h4 Gauntlet
+        a href="/admin/edit_file?type=gauntlet" class="button" edit
+        br
+        i "last updated: xxxx"
+        pre= read_file(filename_for_type('gauntlet')).join("\n")
+
+      div class="row"
+        h4 Global Battle Ground Effects
+        a href="/admin/edit_file?type=bges" class="button" edit
+        pre= read_file(filename_for_type('bges')).join("\n")
+
+      h3 Raid SIMs
+      div class="row"
+        h4 Mission
+        a href="/admin/edit_file?type=raid" class="button" edit
+        pre= read_file(filename_for_type('raid')).join("\n")
+
+      div class="row"
+        h4 Structs
+        a href="/admin/edit_file?type=raid_structs" class="button" edit
+        pre= read_file(filename_for_type('raid_structs')).join("\n")
