@@ -167,7 +167,7 @@ def missions
 end
 
 def read_file(file)
-  File.read(file).split(/\n/)
+  File.read(file).split(/\r?\n/)
 rescue Errno::ENOENT
   []
 end
