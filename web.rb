@@ -64,8 +64,8 @@ post '/job/create' do
 
   inv = inventory(params, user)
 
-  p params
-  p ed_cmd
+  puts "=====> params: #{params.inspect}"
+  puts "=====> ED_CMD: #{ed_cmd}"
 
   cmd_args << "'#{your_deck(params)}'"
   cmd_args << "'#{ed_cmd}'"
@@ -77,7 +77,7 @@ post '/job/create' do
   cmd_args << "-o='#{inv}'" if inv
   cmd_args << "yf '#{params['your_structs']}'" unless params['your_structs'].empty?
   cmd_args << "ef '#{params['enemy_structs']}'" unless params['enemy_structs'].empty?
-  cmd_args << "_gauntlets _ctn _japaneseman"
+  cmd_args << "_gauntlets _japaneseman"
 
   if command == 'climb' && !params['fund'].empty?
     cmd_args << "fund #{params['fund']}"

@@ -29,8 +29,6 @@ class Player < Sequel::Model
 
   def update_deck_and_inventory
     self.tyrant_id = guess_tyrant_id unless tyrant_id
-    puts "===>Tyrant_deck: #{tyrant_deck} #{loki_deck}"
-    puts "===>Invetory: #{tyrant_inventory}"
     self.deck = (tyrant_deck || loki_deck || deck).to_json
     self.inventory = (tyrant_inventory || loki_inventory).to_json
     save
