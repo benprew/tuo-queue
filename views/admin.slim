@@ -17,7 +17,7 @@ div class="container"
         h4 Gauntlet
         a href="/admin/edit_file?type=gauntlet" class="button" edit
         br
-        i "last updated: xxxx"
+        i "last updated: #{@gauntlet_mtime}"
         pre= read_file(filename_for_type('gauntlet')).join("\n")
 
       div class="row"

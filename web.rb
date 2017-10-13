@@ -15,6 +15,8 @@ get '/' do
 end
 
 get '/admin' do
+  fn = filename_for_type('gauntlet')
+  @gauntlet_mtime = File.new(fn).mtime if File.exist?(fn)
   slim :admin
 end
 
@@ -86,7 +88,7 @@ post '/job/create' do
   mode = params['mode'] == 'surge' ? 'surge' : 'fight'
   attrs = [command, mode, params['bge'], params['your_structs'], params['enemy_structs']].reject(&:empty?)
 
-  job.name = "vs. #{enemy_deck} (#{attrs.join(',')})"
+  job.name = "vs. #{ed_cmd} (#{attrs.join(',')})"
   job.command = cmd_args.join(' ')
   job.user = user
   job.save
