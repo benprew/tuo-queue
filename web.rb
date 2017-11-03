@@ -79,7 +79,7 @@ post '/job/create' do
   cmd_args << "-o='#{inv}'" if inv
   cmd_args << "yf '#{params['your_structs']}'" unless params['your_structs'].empty?
   cmd_args << "ef '#{params['enemy_structs']}'" unless params['enemy_structs'].empty?
-  cmd_args << "_gauntlets _japaneseman"
+  cmd_args << "_gauntlets _japaneseman dom- endgame 1"
 
   if command == 'climb' && !params['fund'].empty?
     cmd_args << "fund #{params['fund']}"
